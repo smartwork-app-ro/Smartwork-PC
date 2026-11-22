@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SmartWork - Programul de muncă (PC)</title>
 
-    <!-- Setări PWA & Pictogramă personalizată -->
     <meta name="application-name" content="SmartWork">
     <meta name="apple-mobile-web-app-title" content="SmartWork">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -182,7 +181,7 @@
 
     <style>
         /* =====================================================================
-           1. DESIGN TOKENS & BASE STYLES (DESKTOP / PC OPTIMIZED)
+           1. DESIGN TOKENS & FULL-SCREEN PC LAYOUT
            ===================================================================== */
         :root {
             --bg-body: #f8fafc;
@@ -229,23 +228,20 @@
         }
 
         html, body {
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
             direction: ltr;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Helvetica, Arial, sans-serif;
             background-color: var(--bg-body);
             color: var(--text-main);
             -webkit-font-smoothing: antialiased;
-            line-height: 1.45;
+            line-height: 1.4;
         }
 
         body {
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
-        }
-
-        body.fullscreen-schedule-active {
-            overflow: hidden !important;
         }
 
         button, select, input {
@@ -253,8 +249,8 @@
         }
 
         ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+            width: 9px;
+            height: 9px;
         }
         ::-webkit-scrollbar-track {
             background: #f1f5f9;
@@ -274,20 +270,18 @@
             background: var(--bg-card);
             border-bottom: 1px solid var(--border-color);
             box-shadow: var(--shadow-sm);
-            position: sticky;
-            top: 0;
-            z-index: 30;
-            padding: 12px 20px;
+            padding: 10px 18px;
+            flex-shrink: 0;
+            width: 100%;
         }
 
         .header-inner {
-            max-width: 1720px;
-            margin: 0 auto;
+            width: 100%;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            gap: 14px;
+            gap: 12px;
         }
 
         .brand-trigger {
@@ -295,10 +289,9 @@
             align-items: center;
             gap: 12px;
             cursor: pointer;
-            padding: 6px 10px;
-            margin-left: -10px;
-            border-radius: 14px;
-            transition: background-color 0.2s ease, transform 0.15s ease;
+            padding: 5px 10px;
+            border-radius: 12px;
+            transition: background-color 0.2s ease;
             user-select: none;
             background: transparent;
             border: none;
@@ -309,14 +302,10 @@
             background-color: var(--indigo-50);
         }
 
-        .brand-trigger:active {
-            transform: scale(0.99);
-        }
-
         .brand-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 11px;
             background: linear-gradient(135deg, #2563eb, #1e3a8a);
             color: #ffffff;
             display: flex;
@@ -324,36 +313,26 @@
             justify-content: center;
             flex-shrink: 0;
             box-shadow: 0 4px 10px rgba(37, 99, 235, 0.28);
-            overflow: hidden;
         }
 
         .brand-title-row {
             display: flex;
             align-items: center;
             gap: 8px;
-            flex-wrap: wrap;
         }
 
         .brand-title {
-            font-size: 1.18rem;
+            font-size: 1.15rem;
             font-weight: 800;
             color: var(--text-main);
-            text-decoration: underline;
-            text-decoration-color: var(--indigo-200);
-            text-decoration-thickness: 2px;
-            text-underline-offset: 4px;
-        }
-
-        .brand-trigger:hover .brand-title {
-            color: var(--indigo-700);
         }
 
         .year-badge {
             display: inline-flex;
             align-items: center;
-            padding: 2px 9px;
+            padding: 2px 8px;
             border-radius: 999px;
-            font-size: 0.74rem;
+            font-size: 0.72rem;
             font-weight: 700;
             background: var(--indigo-50);
             color: var(--indigo-700);
@@ -361,9 +340,8 @@
         }
 
         .brand-subtitle {
-            font-size: 0.76rem;
+            font-size: 0.74rem;
             color: var(--text-muted);
-            margin-top: 2px;
         }
 
         .week-navigator {
@@ -371,10 +349,9 @@
             align-items: center;
             gap: 6px;
             background: var(--bg-subtle);
-            padding: 5px;
-            border-radius: 14px;
+            padding: 4px 6px;
+            border-radius: 12px;
             border: 1px solid var(--border-color);
-            flex-wrap: wrap;
         }
 
         .btn {
@@ -399,19 +376,16 @@
             border-color: var(--border-strong);
         }
 
-        .btn:active {
-            transform: translateY(1px);
-        }
-
         .btn-icon {
-            padding: 8px 9px;
+            padding: 7px 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
         }
 
         .btn-primary {
             background: var(--indigo-600);
             color: #ffffff;
             border-color: var(--indigo-600);
-            box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25);
         }
 
         .btn-primary:hover {
@@ -423,23 +397,15 @@
             background: #059669;
             color: #ffffff;
             border-color: #047857;
-            box-shadow: 0 2px 6px rgba(5, 150, 105, 0.25);
         }
 
         .btn-save:hover {
             background: #047857;
-            border-color: #065f46;
         }
 
         .btn-save.has-unsaved {
             background: #d97706;
             border-color: #b45309;
-            box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.22);
-        }
-
-        .btn-save.has-unsaved:hover {
-            background: #b45309;
-            border-color: #92400e;
         }
 
         .btn-soft-indigo {
@@ -466,24 +432,20 @@
             background: #16a34a;
             color: #ffffff;
             border-color: #15803d;
-            box-shadow: 0 2px 6px rgba(22, 163, 74, 0.22);
         }
 
         .btn-whatsapp:hover {
             background: #15803d;
-            border-color: #166534;
         }
 
         .btn-email {
             background: #0284c7;
             color: #ffffff;
             border-color: #0369a1;
-            box-shadow: 0 2px 6px rgba(2, 132, 199, 0.22);
         }
 
         .btn-email:hover {
             background: #0369a1;
-            border-color: #075985;
         }
 
         .btn-danger-soft {
@@ -508,11 +470,6 @@
             outline: none;
         }
 
-        .select-control:focus {
-            border-color: var(--indigo-600);
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
-        }
-
         .header-actions {
             display: flex;
             align-items: center;
@@ -524,15 +481,16 @@
            3. LEGEND, SHARE ACTIONS & STATS BAR
            ===================================================================== */
         .sub-toolbar {
-            max-width: 1720px;
             width: 100%;
-            margin: 14px auto 0;
-            padding: 0 20px;
+            padding: 10px 18px;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
             gap: 12px;
+            flex-shrink: 0;
+            background: var(--bg-body);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .legend-list {
@@ -540,14 +498,14 @@
             flex-wrap: wrap;
             align-items: center;
             gap: 8px;
-            font-size: 0.76rem;
+            font-size: 0.78rem;
         }
 
         .legend-pill {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            padding: 5px 10px;
+            padding: 5px 11px;
             border-radius: 9px;
             font-weight: 600;
             border: 1px solid transparent;
@@ -563,25 +521,24 @@
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .share-group {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            flex-wrap: wrap;
         }
 
         .stats-bar {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 0.8rem;
+            gap: 10px;
+            font-size: 0.82rem;
             color: var(--text-secondary);
             background: #ffffff;
             padding: 7px 14px;
-            border-radius: 12px;
+            border-radius: 10px;
             border: 1px solid var(--border-color);
         }
 
@@ -591,34 +548,50 @@
         }
 
         /* =====================================================================
-           4. SCHEDULE TABLE CONTAINER (MONDAY - SUNDAY)
+           4. LARGE FIXED SCHEDULE TABLE (NO ROTATION, 100% FULL WIDTH/HEIGHT)
            ===================================================================== */
         .main-workspace {
-            flex: 1;
-            max-width: 1720px;
-            width: 100%;
-            margin: 14px auto 24px;
-            padding: 0 20px;
+            flex: 1 1 auto;
+            width: 100vw;
+            height: 100%;
+            min-height: 0;
+            padding: 12px 18px 16px;
             display: flex;
             flex-direction: column;
         }
 
         #fullscreen-overlay-shell {
-            flex: 1;
+            flex: 1 1 auto;
+            width: 100%;
+            height: 100%;
+            min-height: 0;
             display: flex;
             flex-direction: column;
         }
 
+        #fullscreen-overlay-shell.expanded-mode {
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            width: 100vw;
+            height: 100vh;
+            background: #0f172a;
+            padding: 10px;
+        }
+
         #fullscreen-rotated-stage {
-            flex: 1;
+            flex: 1 1 auto;
+            width: 100%;
+            height: 100%;
+            min-height: 0;
             display: flex;
             flex-direction: column;
             background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
+            border: 1px solid var(--border-strong);
+            border-radius: 14px;
             box-shadow: var(--shadow-md);
             overflow: hidden;
-            position: relative;
+            transform: none !important;
         }
 
         #fullscreen-top-bar {
@@ -626,14 +599,14 @@
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            padding: 10px 16px;
+            padding: 9px 16px;
             background: #0f172a;
             color: #ffffff;
             border-bottom: 1px solid #334155;
             flex-shrink: 0;
         }
 
-        #fullscreen-overlay-shell.active #fullscreen-top-bar {
+        #fullscreen-overlay-shell.expanded-mode #fullscreen-top-bar {
             display: flex;
         }
 
@@ -641,21 +614,20 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             font-weight: 700;
         }
 
         .fs-actions-group {
             display: flex;
             align-items: center;
-            gap: 7px;
-            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .fs-btn {
-            padding: 6px 11px;
+            padding: 6px 12px;
             border-radius: 8px;
-            font-size: 0.78rem;
+            font-size: 0.8rem;
             font-weight: 700;
             border: 1px solid #475569;
             background: #1e293b;
@@ -676,58 +648,32 @@
             color: #ffffff;
         }
 
-        .fs-btn-save:hover {
-            background: #047857;
-        }
-
-        .fs-btn-wa {
-            background: #16a34a;
-            border-color: #15803d;
-            color: #ffffff;
-        }
-
-        .fs-btn-wa:hover {
-            background: #15803d;
-        }
-
-        .fs-btn-mail {
-            background: #0284c7;
-            border-color: #0369a1;
-            color: #ffffff;
-        }
-
-        .fs-btn-mail:hover {
-            background: #0369a1;
-        }
-
         .fs-btn-exit {
             background: #e11d48;
             border-color: #e11d48;
             color: #ffffff;
         }
 
-        .fs-btn-exit:hover {
-            background: #be123c;
-        }
-
         #table-scroll-wrapper {
             width: 100%;
-            overflow-x: auto;
-            overflow-y: auto;
-            flex: 1;
+            height: 100%;
+            flex: 1 1 auto;
+            overflow: auto;
         }
 
         table.schedule-table {
             width: 100%;
-            border-collapse: collapse;
+            height: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
             table-layout: fixed;
-            min-width: 980px;
+            min-width: 1040px;
             direction: ltr;
         }
 
-        col.col-employee { width: 18%; }
-        col.col-day      { width: 10.6%; }
-        col.col-days-cnt { width: 7.8%; }
+        col.col-employee { width: 19%; }
+        col.col-day      { width: 10.4%; }
+        col.col-days-cnt { width: 8.2%; }
 
         .schedule-table thead th {
             position: sticky;
@@ -736,21 +682,20 @@
             background: #f1f5f9;
             border-bottom: 2px solid var(--border-strong);
             border-right: 1px solid var(--border-color);
-            padding: 11px 6px;
+            padding: 13px 8px;
             text-align: center;
-            font-size: 0.82rem;
+            font-size: 0.88rem;
             font-weight: 800;
             color: var(--text-main);
         }
 
         .schedule-table thead th.sticky-col {
             position: sticky;
+            top: 0;
             left: 0;
             z-index: 25;
-            direction: ltr;
-            unicode-bidi: isolate;
             text-align: left;
-            padding-left: 14px;
+            padding-left: 16px;
             background: var(--indigo-600);
             color: #ffffff;
             border-right: 2px solid var(--indigo-700);
@@ -770,14 +715,13 @@
 
         .today-red-dot {
             display: inline-block;
-            width: 8px;
-            height: 8px;
+            width: 9px;
+            height: 9px;
             border-radius: 50%;
             background-color: #e11d48;
             box-shadow: 0 0 0 2px rgba(225, 29, 72, 0.22);
-            margin-left: 5px;
+            margin-left: 6px;
             vertical-align: middle;
-            flex-shrink: 0;
         }
 
         .day-name-row {
@@ -787,26 +731,26 @@
         }
 
         .day-name {
-            display: inline-block;
-            font-size: 0.84rem;
+            font-size: 0.9rem;
             font-weight: 800;
         }
 
         .day-date {
             display: block;
-            font-size: 0.72rem;
+            font-size: 0.76rem;
             font-weight: 600;
-            opacity: 0.85;
+            opacity: 0.88;
             margin-top: 2px;
         }
 
         .schedule-table tbody td {
             border-bottom: 1px solid var(--border-color);
             border-right: 1px solid var(--border-color);
-            padding: 6px 5px;
+            padding: 8px 6px;
             vertical-align: middle;
             text-align: center;
-            height: 68px;
+            height: 82px;
+            background: #ffffff;
         }
 
         .schedule-table tbody tr:hover td {
@@ -817,10 +761,8 @@
             position: sticky;
             left: 0;
             z-index: 20;
-            direction: ltr;
-            unicode-bidi: isolate;
             text-align: left;
-            padding: 6px 10px 6px 14px;
+            padding: 8px 12px 8px 16px;
             background: #ffffff;
             border-left: 4px solid var(--indigo-600);
             border-right: 2px solid var(--indigo-200);
@@ -828,99 +770,82 @@
         }
 
         .schedule-table tbody tr:hover td.sticky-col {
-            background: linear-gradient(90deg, var(--indigo-50) 0%, #ffffff 100%);
+            background: var(--indigo-50);
         }
 
         .emp-cell-wrap {
             display: flex;
-            flex-direction: row;
-            direction: ltr;
             align-items: center;
             justify-content: space-between;
-            gap: 6px;
+            gap: 8px;
         }
 
         .emp-info {
             min-width: 0;
             flex: 1;
-            direction: ltr;
-            unicode-bidi: isolate;
-            text-align: left;
         }
 
         .emp-name {
-            direction: ltr;
-            unicode-bidi: isolate;
-            text-align: left;
-            font-size: 0.96rem;
+            font-size: 1.02rem;
             font-weight: 800;
             color: #1e1b4b;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            line-height: 1.25;
         }
 
         .emp-role {
             display: inline-block;
-            direction: ltr;
-            unicode-bidi: isolate;
-            text-align: left;
-            font-size: 0.7rem;
+            font-size: 0.72rem;
             font-weight: 700;
             color: #ffffff;
             background: var(--indigo-600);
-            border: 1px solid var(--indigo-700);
             border-radius: 6px;
-            padding: 1px 8px;
+            padding: 2px 8px;
+            margin-top: 4px;
+            max-width: 100%;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin-top: 3px;
-            max-width: 100%;
         }
 
         .emp-del-btn {
-            opacity: 0.65;
             background: var(--rose-50);
             color: var(--rose-600);
             border: 1px solid var(--rose-200);
             border-radius: 7px;
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             flex-shrink: 0;
-            transition: all 0.15s ease;
-            font-size: 0.75rem;
+            font-size: 0.78rem;
             font-weight: 700;
         }
 
-        .schedule-table tbody tr:hover .emp-del-btn,
-        .emp-del-btn:focus {
-            opacity: 1;
+        .emp-del-btn:hover {
             background: var(--rose-100);
         }
 
         .schedule-table tbody td.weekend-cell {
-            background-color: rgba(254, 243, 199, 0.25);
+            background-color: rgba(254, 243, 199, 0.28);
         }
 
         .shift-slot {
             width: 100%;
             height: 100%;
-            min-height: 50px;
+            min-height: 62px;
             border-radius: 10px;
-            padding: 5px 4px;
+            padding: 6px 5px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             border: 1px solid transparent;
-            transition: transform 0.1s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+            transition: transform 0.1s ease, box-shadow 0.15s ease;
             user-select: none;
         }
 
@@ -932,8 +857,8 @@
         .shift-empty {
             border: 1px dashed #cbd5e1;
             color: #94a3b8;
-            background: rgba(255, 255, 255, 0.7);
-            font-size: 0.76rem;
+            background: rgba(255, 255, 255, 0.8);
+            font-size: 0.8rem;
             font-weight: 600;
         }
 
@@ -968,30 +893,25 @@
         }
 
         .shift-title {
-            font-size: 0.84rem;
+            font-size: 0.9rem;
             font-weight: 800;
             line-height: 1.2;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
         }
 
         .shift-sub {
-            font-size: 0.68rem;
+            font-size: 0.72rem;
             font-weight: 700;
             opacity: 0.92;
-            margin-top: 2px;
-            white-space: nowrap;
+            margin-top: 3px;
         }
 
         .days-count-badge {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 5px 9px;
-            border-radius: 8px;
-            font-size: 0.78rem;
+            padding: 6px 11px;
+            border-radius: 9px;
+            font-size: 0.85rem;
             font-weight: 800;
             background: var(--indigo-50);
             color: var(--indigo-700);
@@ -999,62 +919,33 @@
         }
 
         .schedule-table tfoot td {
+            position: sticky;
+            bottom: 0;
+            z-index: 15;
             background: #f8fafc;
             border-top: 2px solid var(--border-strong);
             border-right: 1px solid var(--border-color);
-            padding: 9px 6px;
+            padding: 11px 8px;
             text-align: center;
-            font-size: 0.76rem;
+            font-size: 0.82rem;
             font-weight: 700;
             color: var(--text-secondary);
         }
 
         .schedule-table tfoot td.sticky-col {
             position: sticky;
+            bottom: 0;
             left: 0;
-            z-index: 20;
-            direction: ltr;
-            unicode-bidi: isolate;
+            z-index: 25;
             background: #f1f5f9;
             text-align: left;
-            padding-left: 14px;
+            padding-left: 16px;
             color: var(--text-main);
             border-right: 2px solid var(--border-strong);
         }
 
         /* =====================================================================
-           5. FULLSCREEN MODE ON PC (CLEAN EXPANDED VIEW, NO 90-DEG ROTATION)
-           ===================================================================== */
-        #fullscreen-overlay-shell.active {
-            position: fixed;
-            inset: 0;
-            z-index: 50;
-            width: 100vw;
-            height: 100vh;
-            height: 100dvh;
-            background: #0f172a;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        #fullscreen-overlay-shell.active #fullscreen-rotated-stage {
-            border-radius: 14px;
-            border: 1px solid #334155;
-            width: 100%;
-            height: 100%;
-            transform: none;
-        }
-
-        #fullscreen-overlay-shell.active #table-scroll-wrapper {
-            overflow: auto;
-            flex: 1 1 auto;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* =====================================================================
-           6. MODALS & TOAST NOTIFICATIONS
+           5. MODALS & TOAST
            ===================================================================== */
         .modal-backdrop {
             position: fixed;
@@ -1074,22 +965,16 @@
 
         .modal-card {
             background: #ffffff;
-            border-radius: 18px;
+            border-radius: 16px;
             width: 100%;
             max-width: 540px;
             box-shadow: var(--shadow-xl);
             border: 1px solid var(--border-color);
             overflow: hidden;
-            animation: modalPop 0.16s ease-out;
         }
 
         .modal-card.modal-wide {
             max-width: 780px;
-        }
-
-        @keyframes modalPop {
-            from { opacity: 0; transform: scale(0.96); }
-            to   { opacity: 1; transform: scale(1); }
         }
 
         .modal-header {
@@ -1121,15 +1006,7 @@
             background: #ffffff;
             color: var(--text-secondary);
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
             font-weight: 700;
-        }
-
-        .modal-close:hover {
-            background: var(--bg-subtle);
-            color: var(--text-main);
         }
 
         .modal-body {
@@ -1154,7 +1031,6 @@
             background: #ffffff;
             text-align: left;
             cursor: pointer;
-            transition: all 0.12s ease;
         }
 
         .preset-btn:hover {
@@ -1164,12 +1040,12 @@
 
         .preset-btn strong {
             display: block;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             color: var(--text-main);
         }
 
         .preset-btn span {
-            font-size: 0.7rem;
+            font-size: 0.72rem;
             color: var(--text-muted);
         }
 
@@ -1245,7 +1121,6 @@
             padding: 10px 14px;
             font-size: 0.78rem;
             font-weight: 600;
-            line-height: 1.4;
         }
 
         #toast-container {
@@ -1257,7 +1132,6 @@
             flex-direction: column;
             gap: 8px;
             pointer-events: none;
-            max-width: 380px;
         }
 
         .toast-item {
@@ -1268,36 +1142,6 @@
             font-size: 0.82rem;
             font-weight: 600;
             box-shadow: var(--shadow-md);
-            animation: slideUp 0.2s ease-out;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        /* =====================================================================
-           7. PRINT STYLES
-           ===================================================================== */
-        @media print {
-            .app-header, .sub-toolbar, .emp-del-btn, #fullscreen-top-bar {
-                display: none !important;
-            }
-            .main-workspace {
-                margin: 0;
-                padding: 0;
-                max-width: none;
-            }
-            #fullscreen-rotated-stage {
-                box-shadow: none;
-                border: none;
-            }
-            .schedule-table tbody td.sticky-col,
-            .schedule-table thead th.sticky-col,
-            .schedule-table tfoot td.sticky-col {
-                position: static;
-                box-shadow: none;
-            }
         }
     </style>
 </head>
@@ -1307,7 +1151,7 @@
         <div class="header-inner">
             <button type="button" class="brand-trigger" onclick="goToCurrentWeek()" title="Mergi la săptămâna curentă">
                 <div class="brand-icon" aria-hidden="true">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="3" y="4" width="18" height="18" rx="3"></rect>
                         <line x1="16" y1="2" x2="16" y2="6"></line>
                         <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -1324,16 +1168,16 @@
             </button>
 
             <div class="week-navigator">
-                <button type="button" class="btn btn-icon" onclick="shiftWeek(-1)" title="Săptămâna anterioară">◀</button>
+                <button type="button" class="btn btn-icon" onclick="shiftWeek(-1)" title="Săptămâna anterioară">←</button>
                 <select id="week-select" class="select-control" onchange="onWeekSelectChange(this.value)" aria-label="Selectează săptămâna"></select>
-                <button type="button" class="btn btn-icon" onclick="shiftWeek(1)" title="Săptămâna următoare">▶</button>
+                <button type="button" class="btn btn-icon" onclick="shiftWeek(1)" title="Săptămâna următoare">→</button>
                 <button type="button" class="btn btn-soft-indigo" onclick="goToCurrentWeek()">Azi</button>
             </div>
 
             <div class="header-actions">
                 <button type="button" class="btn btn-primary" onclick="openEmployeeModal()">+ Adaugă angajat</button>
                 <button type="button" id="btn-save" class="btn btn-save" onclick="saveSchedule()">💾 Salvează</button>
-                <button type="button" class="btn" onclick="toggleFullscreenMode()" title="Ecran complet">⛶ Ecran complet</button>
+                <button type="button" class="btn btn-soft-indigo" onclick="toggleExpandedView()" title="Comută tot ecranul">⇄ Tot ecranul</button>
                 <button type="button" class="btn btn-danger-soft" onclick="openResetModal()">↺ Reset</button>
             </div>
         </div>
@@ -1371,9 +1215,9 @@
                     </div>
                     <div class="fs-actions-group">
                         <button type="button" class="fs-btn fs-btn-save" onclick="saveSchedule()">💾 Salvează</button>
-                        <button type="button" class="fs-btn fs-btn-wa" onclick="shareViaWhatsApp()">💬 WhatsApp</button>
-                        <button type="button" class="fs-btn fs-btn-mail" onclick="shareViaEmail()">✉️ Email</button>
-                        <button type="button" class="fs-btn fs-btn-exit" onclick="toggleFullscreenMode()">✕ Ieși</button>
+                        <button type="button" class="fs-btn" onclick="shareViaWhatsApp()">💬 WhatsApp</button>
+                        <button type="button" class="fs-btn" onclick="shareViaEmail()">✉️ Email</button>
+                        <button type="button" class="fs-btn fs-btn-exit" onclick="toggleExpandedView()">⇄ Ieși din tot ecranul</button>
                     </div>
                 </div>
 
@@ -1415,7 +1259,7 @@
             </div>
             <div class="modal-body">
                 <div>
-                    <div style="font-size:0.75rem;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">Șabloane rapide:</div>
+                    <div style="font-size:0.76rem;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">Șabloane rapide:</div>
                     <div class="preset-grid">
                         <button type="button" class="preset-btn" onclick="applyShiftPreset('work', '06:00 - 14:30', 'Schimb 1')">
                             <strong>06:00 - 14:30</strong>
@@ -1517,7 +1361,7 @@
             </div>
             <div class="modal-body">
                 <div class="share-helper-note">
-                    Poți descărca imaginea direct pe PC sau o poți trimite colegilor pe WhatsApp / Email împreună cu rezumatul săptămânal.
+                    Poți descărca imaginea direct pe PC sau o poți trimite colegilor pe WhatsApp / Email.
                 </div>
                 <div class="png-preview-box" id="png-preview-container">
                     <span style="color:var(--text-muted);font-size:0.84rem;">Se generează imaginea...</span>
@@ -1525,7 +1369,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn" onclick="closePngPreviewModal()">Închide</button>
-                <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <div style="display:flex;gap:8px;">
                     <button type="button" class="btn btn-whatsapp" onclick="shareViaWhatsApp()">💬 Trimite pe WhatsApp</button>
                     <button type="button" class="btn btn-primary" id="btn-download-png">⬇ Descarcă PNG</button>
                 </div>
@@ -1539,7 +1383,7 @@
             <div class="modal-header">
                 <div>
                     <div id="reset-modal-title" class="modal-title">Resetează datele salvate?</div>
-                    <div class="modal-subtitle">Acțiunea va restaura lista inițială de angajați și ture</div>
+                    <div class="modal-subtitle">Se va restaura lista inițială de angajați și ture</div>
                 </div>
                 <button type="button" class="modal-close" onclick="closeResetModal()">✕</button>
             </div>
@@ -1561,7 +1405,7 @@
     <div id="toast-container" aria-live="polite"></div>
 
     <script>
-        const STORAGE_KEY = 'smartwork_schedule_pc_v1';
+        const STORAGE_KEY = 'smartwork_schedule_pc_v2';
         const DAYS_RO = ['Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă', 'Duminică'];
 
         const DEFAULT_EMPLOYEES = [
@@ -1606,10 +1450,10 @@
         let state = {
             currentMonday: getMondayOfWeek(new Date()),
             employees: [],
-            shifts: {}, // key: `${weekIso}_${empId}_${dayIdx}` -> { type, label, note }
+            shifts: {},
             hasUnsaved: false,
             editingCell: null,
-            fullscreenActive: false,
+            expandedView: false,
             generatedPngUrl: null
         };
 
@@ -1621,10 +1465,9 @@
             container.appendChild(el);
             setTimeout(() => {
                 el.style.opacity = '0';
-                el.style.transform = 'translateY(6px)';
-                el.style.transition = 'all 0.2s ease';
+                el.style.transition = 'opacity 0.2s ease';
                 setTimeout(() => el.remove(), 220);
-            }, 2600);
+            }, 2400);
         }
 
         function markUnsaved(flag = true) {
@@ -1641,11 +1484,9 @@
                 const raw = localStorage.getItem(STORAGE_KEY);
                 if (raw) {
                     const parsed = JSON.parse(raw);
-                    if (Array.isArray(parsed.employees) && parsed.employees.length > 0) {
-                        state.employees = parsed.employees;
-                    } else {
-                        state.employees = [...DEFAULT_EMPLOYEES];
-                    }
+                    state.employees = Array.isArray(parsed.employees) && parsed.employees.length > 0
+                        ? parsed.employees
+                        : [...DEFAULT_EMPLOYEES];
                     state.shifts = parsed.shifts && typeof parsed.shifts === 'object' ? parsed.shifts : {};
                 } else {
                     state.employees = [...DEFAULT_EMPLOYEES];
@@ -1680,9 +1521,9 @@
                     shifts: state.shifts
                 }));
                 markUnsaved(false);
-                showToast('Programul a fost salvat în browser.');
+                showToast('Programul a fost salvat.');
             } catch (e) {
-                showToast('Nu s-a putut salva programul.');
+                showToast('Eroare la salvare.');
             }
         }
 
@@ -1690,13 +1531,6 @@
             const select = document.getElementById('week-select');
             const currentIso = formatIsoDate(state.currentMonday);
             select.innerHTML = '';
-
-            for (let offset = -12; offset <= 16; offset++) {
-                const m = new Date(state.currentMonday);
-                if (offset === 0) {
-                    // păstrăm săptămâna curentă selectată și generăm în jurul ei
-                }
-            }
 
             const baseMonday = getMondayOfWeek(new Date());
             for (let offset = -16; offset <= 24; offset++) {
@@ -1743,7 +1577,7 @@
         function goToCurrentWeek() {
             state.currentMonday = getMondayOfWeek(new Date());
             renderAll();
-            showToast('Ai revenit la săptămâna curentă.');
+            showToast('Săptămâna curentă.');
         }
 
         function renderHeaderLabels() {
@@ -1847,8 +1681,8 @@
             if (state.employees.length === 0) {
                 bodyHtml = `
                     <tr>
-                        <td colspan="9" style="padding:32px;color:var(--text-muted);font-size:0.9rem;">
-                            Niciun angajat adăugat. Apasă pe <strong>+ Adaugă angajat</strong> pentru a începe.
+                        <td colspan="9" style="padding:36px;color:var(--text-muted);font-size:0.95rem;">
+                            Niciun angajat adăugat. Apasă pe <strong>+ Adaugă angajat</strong>.
                         </td>
                     </tr>
                 `;
@@ -1884,7 +1718,12 @@
             renderTable();
         }
 
-        /* Shift Modal */
+        function toggleExpandedView() {
+            const shell = document.getElementById('fullscreen-overlay-shell');
+            state.expandedView = !state.expandedView;
+            shell.classList.toggle('expanded-mode', state.expandedView);
+        }
+
         function openShiftModal(empId, dayIdx) {
             const emp = state.employees.find(e => e.id === empId);
             if (!emp) return;
@@ -1946,7 +1785,6 @@
             renderTable();
         }
 
-        /* Employee Modal */
         function openEmployeeModal() {
             document.getElementById('emp-name-input').value = '';
             document.getElementById('emp-role-input').value = '';
@@ -1965,12 +1803,11 @@
                 showToast('Introdu numele angajatului.');
                 return;
             }
-            const newEmp = {
+            state.employees.push({
                 id: 'emp-' + Date.now(),
                 name,
                 role
-            };
-            state.employees.push(newEmp);
+            });
             markUnsaved(true);
             closeEmployeeModal();
             renderTable();
@@ -1989,7 +1826,6 @@
             showToast(`${emp.name} a fost eliminat.`);
         }
 
-        /* Reset Modal */
         function openResetModal() {
             document.getElementById('reset-confirm-modal').classList.add('open');
         }
@@ -2006,18 +1842,9 @@
             markUnsaved(false);
             closeResetModal();
             renderAll();
-            showToast('Programul a fost resetat la valorile inițiale.');
+            showToast('Programul a fost resetat.');
         }
 
-        /* Fullscreen PC */
-        function toggleFullscreenMode() {
-            const shell = document.getElementById('fullscreen-overlay-shell');
-            state.fullscreenActive = !state.fullscreenActive;
-            shell.classList.toggle('active', state.fullscreenActive);
-            document.body.classList.toggle('fullscreen-schedule-active', state.fullscreenActive);
-        }
-
-        /* Summary text for WhatsApp & Email */
         function buildScheduleSummaryText() {
             const wkIso = formatIsoDate(state.currentMonday);
             const sun = new Date(state.currentMonday);
@@ -2045,8 +1872,7 @@
 
         function shareViaWhatsApp() {
             const text = buildScheduleSummaryText();
-            const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-            window.open(url, '_blank', 'noopener,noreferrer');
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
         }
 
         function shareViaEmail() {
@@ -2056,20 +1882,16 @@
             window.location.href = `mailto:?subject=${subject}&body=${body}`;
         }
 
-        /* Canvas PNG Export */
         function generateSchedulePngDataUrl() {
             const wkIso = formatIsoDate(state.currentMonday);
             const sun = new Date(state.currentMonday);
             sun.setDate(state.currentMonday.getDate() + 6);
             const wkNum = getIsoWeekNumber(state.currentMonday);
 
-            const cols = 9; // Angajat + 7 zile + Zile
             const rowsCount = Math.max(1, state.employees.length);
-            const colWidths = [230, 125, 125, 125, 125, 125, 125, 125, 85];
+            const colWidths = [240, 130, 130, 130, 130, 130, 130, 130, 90];
             const totalWidth = colWidths.reduce((a, b) => a + b, 0) + 40;
-            const headerHeight = 84;
-            const rowHeight = 52;
-            const totalHeight = headerHeight + (rowsCount + 1) * rowHeight + 44;
+            const totalHeight = 84 + (rowsCount + 1) * 54 + 44;
 
             const canvas = document.createElement('canvas');
             canvas.width = totalWidth;
@@ -2093,30 +1915,30 @@
 
             headers.forEach((h, i) => {
                 ctx.fillStyle = i === 0 ? '#4f46e5' : '#f1f5f9';
-                ctx.fillRect(x, y, colWidths[i], 34);
+                ctx.fillRect(x, y, colWidths[i], 36);
                 ctx.strokeStyle = '#cbd5e1';
-                ctx.strokeRect(x, y, colWidths[i], 34);
+                ctx.strokeRect(x, y, colWidths[i], 36);
                 ctx.fillStyle = i === 0 ? '#ffffff' : '#0f172a';
                 ctx.font = 'bold 12px sans-serif';
-                ctx.fillText(h.slice(0, 18), x + 8, y + 21);
+                ctx.fillText(h.slice(0, 19), x + 8, y + 22);
                 x += colWidths[i];
             });
 
-            y += 34;
+            y += 36;
             state.employees.forEach((emp) => {
                 x = 20;
                 let worked = 0;
 
                 ctx.fillStyle = '#ffffff';
-                ctx.fillRect(x, y, colWidths[0], rowHeight);
+                ctx.fillRect(x, y, colWidths[0], 54);
                 ctx.strokeStyle = '#e2e8f0';
-                ctx.strokeRect(x, y, colWidths[0], rowHeight);
+                ctx.strokeRect(x, y, colWidths[0], 54);
                 ctx.fillStyle = '#0f172a';
                 ctx.font = 'bold 13px sans-serif';
-                ctx.fillText(emp.name.slice(0, 24), x + 8, y + 21);
+                ctx.fillText(emp.name.slice(0, 25), x + 8, y + 22);
                 ctx.fillStyle = '#64748b';
                 ctx.font = '11px sans-serif';
-                ctx.fillText((emp.role || 'Angajat').slice(0, 24), x + 8, y + 38);
+                ctx.fillText((emp.role || 'Angajat').slice(0, 25), x + 8, y + 40);
                 x += colWidths[0];
 
                 for (let d = 0; d < 7; d++) {
@@ -2135,24 +1957,24 @@
                     }
 
                     ctx.fillStyle = bg;
-                    ctx.fillRect(x, y, colWidths[d + 1], rowHeight);
+                    ctx.fillRect(x, y, colWidths[d + 1], 54);
                     ctx.strokeStyle = '#e2e8f0';
-                    ctx.strokeRect(x, y, colWidths[d + 1], rowHeight);
+                    ctx.strokeRect(x, y, colWidths[d + 1], 54);
                     ctx.fillStyle = fg;
-                    ctx.font = 'bold 11px sans-serif';
-                    ctx.fillText(txt.slice(0, 15), x + 6, y + 30);
+                    ctx.font = 'bold 12px sans-serif';
+                    ctx.fillText(txt.slice(0, 16), x + 6, y + 31);
                     x += colWidths[d + 1];
                 }
 
                 ctx.fillStyle = '#eef2ff';
-                ctx.fillRect(x, y, colWidths[8], rowHeight);
+                ctx.fillRect(x, y, colWidths[8], 54);
                 ctx.strokeStyle = '#e2e8f0';
-                ctx.strokeRect(x, y, colWidths[8], rowHeight);
+                ctx.strokeRect(x, y, colWidths[8], 54);
                 ctx.fillStyle = '#4338ca';
                 ctx.font = 'bold 13px sans-serif';
-                ctx.fillText(`${worked}`, x + 28, y + 30);
+                ctx.fillText(`${worked}`, x + 30, y + 31);
 
-                y += rowHeight;
+                y += 54;
             });
 
             return canvas.toDataURL('image/png');
